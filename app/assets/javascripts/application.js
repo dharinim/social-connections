@@ -10,6 +10,17 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
 //= require rails-ujs
 //= require turbolinks
+//= require jquery
+//= require jquery-ui
 //= require_tree .
+
+$(function() {
+    $('#pagination').pagination({
+        items: 100,
+        itemsOnPage: 10,
+        cssStyle: 'light-theme'
+    });
+});

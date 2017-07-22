@@ -1,0 +1,22 @@
+<% users = User.all %>
+<h3> User Details</h3>
+<table border ="2">
+  <tr>
+    <th>Name</th>
+    <th>LinkedIn Connections</th>
+    <th>Facebook Connections</th>
+    <th>Twitter Followers</th>
+    <th>Social Connection Index</th>
+  </tr>
+  <% users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.linkedin_connections %></td>
+      <td><%= user.facebook_connections %></td>
+      <td><%= user.twitter_followers %></td>
+      <td><%= user.social_connection_index %></td>
+    </tr>
+  <% end %>
+</table>
+
+<div id="pagination"></div>
