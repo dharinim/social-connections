@@ -26,7 +26,7 @@ $(document).ready(function (){
     edit_invoker = $(e.relatedTarget);
   });
 
-  $('#delete').on('click', function(e){
+  $('#edituser').on('click', function(e){
     e.preventDefault();
     console.log(edit_invoker.data('user_id'));
     id = edit_invoker.data('id');
