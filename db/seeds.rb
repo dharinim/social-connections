@@ -3,7 +3,7 @@ User.delete_all
 User.connection.execute('ALTER SEQUENCE users_id_seq RESTART WITH 1')
 
 fake_users = []
-50.times do 
+(0..50).each
   fake_users << {name: Faker::Name.name, linkedin_connections: rand(100), facebook_connections: rand(100), twitter_followers: rand(100)}
 end
 

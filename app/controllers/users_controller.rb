@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   end
   
   def user_details
-    users = User.all
+    users = User.all.order(:social_connection_index).reverse
+    # Item.order('item_timestamp DESC NULLS LAST').paginate(:page => params[:page], :per_page => 5)
 
     response = {
       users: users
