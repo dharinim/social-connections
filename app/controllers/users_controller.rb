@@ -17,6 +17,10 @@ class UsersController < ApplicationController
     end
   end
   
+  def create
+    newuser = User.create(params)
+  end
+
   def edit
       user = User.find(params["id"].to_i)
       user.update(id: params["id"].to_i,

@@ -14,10 +14,7 @@
           <div class="container">
               <div class="row row-grid">
                 <div class="col-md-12">
-                  <h3>User Details</h3>
-                  <p>
-                    The following are the user details.
-                  </p>
+                  <h3>User Details <button type="button" class="btn btn-primary btn-md" data-title="Create" data-toggle="modal" data-target="#create">Add User</span></button></h3>
                 </div>
               </div>
               <%= render "user_details.html.erb" %>
@@ -42,5 +39,5 @@
     </div>
   </div>
 </div>
-
+<%= render "user_create_modal.html.erb" %>
 

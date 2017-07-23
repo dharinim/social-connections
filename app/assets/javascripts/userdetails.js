@@ -58,10 +58,10 @@ $(document).ready(function (){
         // social_connections_index: social_connections_index
       },
       success: function(response){
-        alert(response);
+        // alert(response);
       },
       error: function(response){
-        alert(response);
+        // alert(response);
       }
     });
    });
