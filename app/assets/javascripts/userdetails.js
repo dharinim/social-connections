@@ -23,7 +23,7 @@ $(document).ready(function (){
   getUserDetails();
   
   $('#edit').on('show.bs.modal', function (e) {
-    var edit_invoker = $(e.relatedTarget);
+    edit_invoker = $(e.relatedTarget);
     var data_id = edit_invoker.data('id');
     var data_name = edit_invoker.data('name');
     var data_linkedin_connections = edit_invoker.data('linkedin_connections');

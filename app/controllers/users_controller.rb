@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
+  include UsersHelper
   skip_before_action :verify_authenticity_token
   def index
-    
   end
   
   def user_details
@@ -18,15 +18,12 @@ class UsersController < ApplicationController
   end
   
   def edit
-    p "i m in edit"
-    p params["id"]
       user = User.find(params["id"].to_i)
-      p user
       user.update(id: params["id"].to_i,
                   name: params["name"], 
                   linkedin_connections: params["linkedin_connections"].to_i, 
                   facebook_connections: params["facebook_connections"].to_i, 
                   twitter_followers: params["twitter_followers"].to_i,
-                  social_connection_index: params["social_connection_index"].to_i)
+                  social_connection_index: find_social_connection_index(params["linkedin_connections"], params["facebook_connections"], params["twitter_followers"]))
   end
 end
