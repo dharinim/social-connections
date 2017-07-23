@@ -1,0 +1,28 @@
+<%= form_for @user do |f| %>
+  <div class="form-group">
+    <%= f.label :Name %>
+    <%= f.text_field :name, class: "form-control", :placeholder => "Name" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :linkedin_connections %>
+    <%= f.text_field :linkedin_connections, class: "form-control", :placeholder => "LinkedIn Connections" %>
+  </div>
+  
+  <div class="form-group">
+    <%= f.label :facebook_connections %>
+    <%= f.text_field :facebook_connections, class: "form-control", :placeholder => "Facebook Connections" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :twitter_followers %>
+    <%= f.password_field :twitter_followers, class: "form-control", :placeholder => "Twitter Followers" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :social_security_index %>
+    <%= f.password_field :social_security_index, class: "form-control", :placeholder => "Social Connection Index" %>
+  </div>
+  <%= f.submit "Add User", class: "btn btn-primary" %>
+<% end %>
+

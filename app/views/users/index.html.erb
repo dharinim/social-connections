@@ -1,22 +1,46 @@
-<% users = User.all %>
 <h3> User Details</h3>
-<table border ="2">
-  <tr>
-    <th>Name</th>
-    <th>LinkedIn Connections</th>
-    <th>Facebook Connections</th>
-    <th>Twitter Followers</th>
-    <th>Social Connection Index</th>
-  </tr>
-  <% users.each do |user| %>
-    <tr>
-      <td><%= user.name %></td>
-      <td><%= user.linkedin_connections %></td>
-      <td><%= user.facebook_connections %></td>
-      <td><%= user.twitter_followers %></td>
-      <td><%= user.social_connection_index %></td>
-    </tr>
-  <% end %>
-</table>
+<div class="container">
+  <div id="exTab2" class="container"> 
+      <ul  class="nav nav-tabs">
+        <li class="active">
+          <a  href="#1a" data-toggle="tab">User Details</a>
+        </li>
+        <li><a href="#2a" data-toggle="tab">Search User</a>
+        </li>
+      </ul>
 
-<div id="pagination"></div>
+      <div class="tab-content clearfix">
+        <div class="tab-pane active" id="1a">
+          <div class="container">
+              <div class="row row-grid">
+                <div class="col-md-12">
+                  <h3>User Details</h3>
+                  <p>
+                    The following are the user details.
+                  </p>
+                </div>
+              </div>
+              <%= render "user_details.html.erb" %>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="2a">
+          <div class="container">
+            <div class="col-md-12">
+              <h3>Search User here</h3>
+              <p>
+                Search for trains between two cities for a week starting
+                from the selected date.
+              </p>
+            </div>
+            <%= render "search_results.html.erb" %>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
