@@ -23,21 +23,42 @@ $(document).ready(function (){
   // }
 
 
-  function _getUserDetails(sort_order, cb) {
+  // function getUserDetails() {
+  //   $.ajax({
+  //     url: "users/user_details",
+  //     method: "get",
+  //     success: function(response) {
+  //       user_html = user_template({
+  //         users: response.users
+  //       });
+  //       // console.log(user_html);
+  //       $("#user_details").html(user_html);
+  //       $('.sort').on('click', function(e){
+  //         console.log($(this).data('name'));
+  //         sort_order = $(this).data('name');
+  //         $.ajax({
+  //           url: "users/sort",
+  //           method: "post",
+  //           data: {
+  //             order: sort_order
+  //           },
+  //           success: function(response) {
+  //             user_html = user_template({
+  //               users: response.users
+  //             });
+  //             $("#user_details").html(user_html);
+  //           }
+  //         });
+  //       });
+  //     },
+  //     error: function(xhr) {
+  //       //Todo: Display error in UI
+  //     }
+  //   });    
+  // }
 
-          $.ajax({
-            url: "users/sort",
-            method: "post",
-            data: {
-              order: sort_order
-            },
-            success: function(response) {
-                return cb(null, response);
-            }
-          });
-  }
 
-  function getUserDetails() {
+  function getUserDetails(cb) {
     $.ajax({
       url: "users/user_details",
       method: "get",
@@ -46,32 +67,45 @@ $(document).ready(function (){
           users: response.users
         });
         // console.log(user_html);
+        
+        // var user_html = $(user_html);
+        // _apply_sort(user_html);
         $("#user_details").html(user_html);
-        $('.sort').on('click', function(e){
-          console.log($(this).data('name'));
-          sort_order = $(this).data('name');
-          $.ajax({
-            url: "users/sort",
-            method: "post",
-            data: {
-              order: sort_order
-            },
-            success: function(response) {
-              user_html = user_template({
-                users: response.users
-              });
-            $("#user_details").html(user_html);
-            }
-          });
-        });
+        _apply_sort();
       },
       error: function(xhr) {
         //Todo: Display error in UI
       }
     });    
   }
-  getUserDetails();
 
+
+  function _apply_sort() {
+      $('.sort').on('click', function(e){
+        sort_order = $(this).data('name');
+        console.log($(this).data('name'));
+        $.ajax({
+          url: "users/sort",
+          method: "post",
+          data: {
+            order: sort_order,
+          },
+          success: function(response) {
+            user_html = user_template({
+              users: response.users
+            });
+
+            //var user_html = $(user_html);
+            //_apply_sort(user_html);
+            $("#user_details").html(user_html);
+            _apply_sort();
+          }
+        });
+      });
+  }
+
+
+  getUserDetails();
 
  
    $('#edit').on('show.bs.modal', function (e) {
