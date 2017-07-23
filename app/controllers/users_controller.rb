@@ -22,10 +22,11 @@ class UsersController < ApplicationController
     p params["id"]
       user = User.find(params["id"].to_i)
       p user
-      user.update(name: params["name"], 
-                  linkedin_connections: params["linkedin_connections"], 
-                  facebook_connections: params["facebook_connections"], 
-                  twitter_followers: params["twitter_followers"],
-                  social_connection_index: params["social_connection_index"])
+      user.update(id: params["id"].to_i,
+                  name: params["name"], 
+                  linkedin_connections: params["linkedin_connections"].to_i, 
+                  facebook_connections: params["facebook_connections"].to_i, 
+                  twitter_followers: params["twitter_followers"].to_i,
+                  social_connection_index: params["social_connection_index"].to_i)
   end
 end
