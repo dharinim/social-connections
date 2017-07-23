@@ -22,6 +22,10 @@ $(document).ready(function (){
   }
   getUserDetails();
   
+  $('#sortid').on('click', function(e){
+    alert('sorting');
+  });
+
   $('#edit').on('show.bs.modal', function (e) {
     edit_invoker = $(e.relatedTarget);
     var data_id = edit_invoker.data('id');
@@ -35,6 +39,33 @@ $(document).ready(function (){
     var twitter_followers = $("#edit input[name='twitter_followers']").val(data_twitter_followers);
   });
 
+  $('#createuser').on('click', function(e){
+    e.preventDefault();
+    // console.log(data_id,name,linkedin_connections);
+    var name = $("#create input[name='name']").val();
+    var linkedin_connections = $("#create input[name='linkedin_connections']").val();
+    var facebook_connections = $("#create input[name='facebook_connections']").val();
+    var twitter_followers = $("#create input[name='twitter_followers']").val();
+
+    $.ajax({
+      url: '/users/create',
+      method: 'post',
+      data: {
+        name: name,
+        linkedin_connections: linkedin_connections,
+        facebook_connections: facebook_connections,
+        twitter_followers: twitter_followers,
+        // social_connections_index: social_connections_index
+      },
+      success: function(response){
+        // alert(response);
+      },
+      error: function(response){
+        // alert(response);
+      }
+    });
+    getUserDetails();
+   });
 
 
   $('#edituser').on('click', function(e){
@@ -64,7 +95,7 @@ $(document).ready(function (){
         // alert(response);
       }
     });
+    getUserDetails();
    });
   
-
 });

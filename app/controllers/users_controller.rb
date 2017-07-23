@@ -18,7 +18,13 @@ class UsersController < ApplicationController
   end
   
   def create
-    newuser = User.create(params)
+    p params
+    # social_connection_index = find_social_connection_index(params["linkedin_connections"].to_i, params["facebook_connections"].to_i, params["twitter_followers"].to_i))
+    newuser = User.create(name: params["name"], 
+              linkedin_connections: params["linkedin_connections"].to_i,
+              facebook_connections: params["facebook_connections"].to_i, 
+              twitter_followers: params["twitter_followers"].to_i,
+              social_connection_index: find_social_connection_index(params["linkedin_connections"].to_i, params["facebook_connections"].to_i, params["twitter_followers"].to_i))
   end
 
   def edit
@@ -28,6 +34,6 @@ class UsersController < ApplicationController
                   linkedin_connections: params["linkedin_connections"].to_i, 
                   facebook_connections: params["facebook_connections"].to_i, 
                   twitter_followers: params["twitter_followers"].to_i,
-                  social_connection_index: find_social_connection_index(params["linkedin_connections"], params["facebook_connections"], params["twitter_followers"]))
+                  social_connection_index: find_social_connection_index(params["linkedin_connections"].to_i, params["facebook_connections"].to_i, params["twitter_followers"].to_i))
   end
 end

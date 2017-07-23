@@ -1,7 +1,7 @@
 module UsersHelper
 
   def find_social_connection_index(linkedin_connections, facebook_connections, twitter_followers)
-    social_network_count = linkedin_connections.to_i + facebook_connections.to_i + twitter_followers.to_i
+    social_network_count = linkedin_connections + facebook_connections + twitter_followers
     case social_network_count 
       when 0..50
         then index = 1
