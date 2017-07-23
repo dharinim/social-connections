@@ -4,16 +4,66 @@ $(document).ready(function (){
   var userdetails_source   = $("#render_user_list").html();
   var user_template = Handlebars.compile(userdetails_source);
 
+  // function sortValues(){
+  //         console.log($(this).data('name'));
+  //         sort_order = $(this).data('name');
+  //         $.ajax({
+  //           url: "users/sort",
+  //           method: "post",
+  //           data: {
+  //             order: sort_order
+  //           },
+  //           success: function(response) {
+  //             user_html = user_template({
+  //               users: response.users
+  //             });
+  //           $("#user_details").html(user_html);
+  //           }
+  //         });
+  // }
+
+
+  function _getUserDetails(sort_order, cb) {
+
+          $.ajax({
+            url: "users/sort",
+            method: "post",
+            data: {
+              order: sort_order
+            },
+            success: function(response) {
+                return cb(null, response);
+            }
+          });
+  }
+
   function getUserDetails() {
     $.ajax({
       url: "users/user_details",
-      type: "get",
+      method: "get",
       success: function(response) {
         user_html = user_template({
           users: response.users
         });
         // console.log(user_html);
         $("#user_details").html(user_html);
+        $('.sort').on('click', function(e){
+          console.log($(this).data('name'));
+          sort_order = $(this).data('name');
+          $.ajax({
+            url: "users/sort",
+            method: "post",
+            data: {
+              order: sort_order
+            },
+            success: function(response) {
+              user_html = user_template({
+                users: response.users
+              });
+            $("#user_details").html(user_html);
+            }
+          });
+        });
       },
       error: function(xhr) {
         //Todo: Display error in UI
@@ -21,12 +71,10 @@ $(document).ready(function (){
     });    
   }
   getUserDetails();
-  
-  $('#sortid').on('click', function(e){
-    alert('sorting');
-  });
 
-  $('#edit').on('show.bs.modal', function (e) {
+
+ 
+   $('#edit').on('show.bs.modal', function (e) {
     edit_invoker = $(e.relatedTarget);
     var data_id = edit_invoker.data('id');
     var data_name = edit_invoker.data('name');
@@ -38,6 +86,9 @@ $(document).ready(function (){
     var facebook_connections = $("#edit input[name='facebook_connections']").val(data_facebook_connections);
     var twitter_followers = $("#edit input[name='twitter_followers']").val(data_twitter_followers);
   });
+  
+
+
 
   $('#createuser').on('click', function(e){
     e.preventDefault();
@@ -58,13 +109,13 @@ $(document).ready(function (){
         // social_connections_index: social_connections_index
       },
       success: function(response){
-        // alert(response);
+        $("#create .close").click();
+        getUserDetails();
       },
       error: function(response){
         // alert(response);
       }
     });
-    getUserDetails();
    });
 
 
@@ -89,13 +140,15 @@ $(document).ready(function (){
         // social_connections_index: social_connections_index
       },
       success: function(response){
-        // alert(response);
+        $("#edit .close").click();
+        getUserDetails();
       },
       error: function(response){
         // alert(response);
       }
     });
-    getUserDetails();
+
+    
    });
   
 });

@@ -2,12 +2,12 @@
               <div class="table-responsive">
                 <table id="mytable" class="table table-bordred table-striped">
                   <thead>
-                    <th id="sortid">ID</th>
-                    <th id="sortname">Name</th>
-                    <th id="sortlinkedin">LinkedIn Connections</th>
-                    <th id="sortfacebook">Facebook Connections</th>
-                    <th id="sorttwitter">Twitter Followers</th>
-                    <th id="sortconnection">Social Connection Index</th>
+                    <th class="sort" data-name="id">ID</th>
+                    <th class="sort" data-name="name">Name</th>
+                    <th class="sort" data-name="linkedin_connections">LinkedIn Connections</th>
+                    <th class="sort" data-name="facebook_connections">Facebook Connections</th>
+                    <th class="sort" data-name="twitter_followers">Twitter Followers</th>
+                    <th class="sort" data-name="social_connection_index">Social Connection Index</th>
                   </thead>
                   <tbody>
                     {{#each users}}

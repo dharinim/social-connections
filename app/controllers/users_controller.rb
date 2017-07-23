@@ -36,4 +36,19 @@ class UsersController < ApplicationController
                   twitter_followers: params["twitter_followers"].to_i,
                   social_connection_index: find_social_connection_index(params["linkedin_connections"].to_i, params["facebook_connections"].to_i, params["twitter_followers"].to_i))
   end
+
+  def sort
+    p params
+    sort_order = params["order"].to_sym
+    p sort_order
+    users = User.all.order(sort_order).reverse
+    response = {
+      users: users
+    }
+    # p response[:users]
+    respond_to do |format|
+      format.json  { render :json => response }
+    end
+  end
+
 end
