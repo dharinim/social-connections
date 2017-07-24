@@ -1,3 +1,3 @@
 app/models/user.rb a7a01264a6f01c2a7cc2b6783914078b9f0daee8
-app/helpers/users_helper.rb 577dddbc0cbbb0a4507bf2e5b9144f6fd3cfe873
-app/controllers/users_controller.rb d12359fe73b58a7fbddcd16afbe7c71fbbabb25b
+app/helpers/users_helper.rb ecaf654382bd813257efddc963e9176c413716b1
+app/controllers/users_controller.rb 578a6ed643416eb7254343b254dd5fefc7656c62

@@ -34,6 +34,15 @@ Once installation is done, visit http://localhost:3000/
 
 ```
 
+
+## Key files
+
+[javascript](https://github.com/dharinim/social-connections/blob/master/app/assets/javascripts/userdetails.js)
+[Controller](https://github.com/dharinim/social-connections/blob/master/app/controllers/users_controller.rb)
+[Helper](https://github.com/dharinim/social-connections/blob/master/app/helpers/users_helper.rb)
+[Test](https://github.com/dharinim/social-connections/blob/master/test/controllers/users_controller_test.rb)
+[Layouts](https://github.com/dharinim/social-connections/tree/master/app/views/users)
+
 ## Key Features Implemented
   - Shows list of all users in the database with social connection scores
   - Ability to sort results based on the the following criteria

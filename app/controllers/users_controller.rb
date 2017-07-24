@@ -58,7 +58,7 @@ class UsersController < ApplicationController
                 linkedin_connections: linkedin_connections,
                 facebook_connections: facebook_connections, 
                 twitter_followers: twitter_followers,
-                social_connection_index: find_social_connection_index(
+                social_connection_index: User.compute_social_connection(
                     linkedin_connections,
                     facebook_connections,
                     twitter_followers
@@ -86,7 +86,7 @@ class UsersController < ApplicationController
         linkedin_connections: linkedin_connections, 
         facebook_connections: facebook_connections, 
         twitter_followers: twitter_followers,
-        social_connection_index: find_social_connection_index(
+        social_connection_index: User.compute_social_connection(
           linkedin_connections,
           facebook_connections,
           twitter_followers
