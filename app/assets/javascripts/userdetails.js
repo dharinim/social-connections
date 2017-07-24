@@ -140,7 +140,6 @@ UIManager.prototype._initialize_create_modal = function _initialize_create_modal
     });
 };
  
-
 UIManager.prototype._initialize_edit_modal = function _initialize_edit_modal() {
     var self = this;
     var editModal = $('#edit');
