@@ -1,188 +1,270 @@
-$(document).ready(function (){
-  console.log("i m here");
-  // Load schedule on page load
-  var userdetails_source   = $("#render_user_list").html();
-  var user_template = Handlebars.compile(userdetails_source);
+function ServerManager(opts) {
+  // Handlers all the server interactions
 
-  // function sortValues(){
-  //         console.log($(this).data('name'));
-  //         sort_order = $(this).data('name');
-  //         $.ajax({
-  //           url: "users/sort",
-  //           method: "post",
-  //           data: {
-  //             order: sort_order
-  //           },
-  //           success: function(response) {
-  //             user_html = user_template({
-  //               users: response.users
-  //             });
-  //           $("#user_details").html(user_html);
-  //           }
-  //         });
-  // }
+  this.userquery = {
+    sort: "social_connections_index",
+    page: 1,
+    limit: 10,
+    order: "desc"
+  };
+}
 
+ServerManager.prototype.getUsers = function getUsers(cb) {
+    var self = this;
 
-  // function getUserDetails() {
-  //   $.ajax({
-  //     url: "users/user_details",
-  //     method: "get",
-  //     success: function(response) {
-  //       user_html = user_template({
-  //         users: response.users
-  //       });
-  //       // console.log(user_html);
-  //       $("#user_details").html(user_html);
-  //       $('.sort').on('click', function(e){
-  //         console.log($(this).data('name'));
-  //         sort_order = $(this).data('name');
-  //         $.ajax({
-  //           url: "users/sort",
-  //           method: "post",
-  //           data: {
-  //             order: sort_order
-  //           },
-  //           success: function(response) {
-  //             user_html = user_template({
-  //               users: response.users
-  //             });
-  //             $("#user_details").html(user_html);
-  //           }
-  //         });
-  //       });
-  //     },
-  //     error: function(xhr) {
-  //       //Todo: Display error in UI
-  //     }
-  //   });    
-  // }
-
-
-  function getUserDetails(cb) {
     $.ajax({
-      url: "users/user_details",
+      url: "/users/",
       method: "get",
+      query: self.userquery,
       success: function(response) {
-        user_html = user_template({
-          users: response.users
-        });
-        // console.log(user_html);
-        
-        // var user_html = $(user_html);
-        // _apply_sort(user_html);
-        $("#user_details").html(user_html);
-        _apply_sort();
+        return cb(null, response);
       },
       error: function(xhr) {
-        //Todo: Display error in UI
+        return cb(xhr, {});
       }
-    });    
-  }
+    }); 
+};
+
+function UIManager(opts) {
+  this.serverManager = opts.serverManager;
 
 
-  function _apply_sort() {
-      $('.sort').on('click', function(e){
-        sort_order = $(this).data('name');
-        console.log($(this).data('name'));
-        $.ajax({
-          url: "users/sort",
-          method: "post",
-          data: {
-            order: sort_order,
-          },
-          success: function(response) {
-            user_html = user_template({
-              users: response.users
-            });
+  // List of templates used on the page
+  this.templates = {
+    userdetails_template: Handlebars.compile($("#render_user_list").html())
+  };
+}
 
-            //var user_html = $(user_html);
-            //_apply_sort(user_html);
-            $("#user_details").html(user_html);
-            _apply_sort();
-          }
+UIManager.prototype.showUsersList = function showUsersList() {
+  var self = this;
+
+  self.serverManager.getUsers(function (error, response) {
+    if (!error) {
+        userdetails_html = self.templates.userdetails_template({
+          users: response.users
         });
-      });
-  }
+
+        $("#user_details").html(userdetails_html);
+    } else {
+      // Display error in UI
+    }
+  });
+};
 
 
-  getUserDetails();
+
+
+
+$(document).ready(function () {
+  var serverManager = new ServerManager();
+  var uiManager = new UIManager({
+    serverManager: serverManager
+  });
+
+
+  uiManager.showUsersList();
+
+  // $("#user_details_table").DataTable({
+  //       "processing": true,
+  //       "serverSide": true,
+  //       "ajax": "/users/",
+  //       "columns": [
+  //           { "data": "id" },
+  //           { "data": "name" },
+  //           { "data": "linkedin_connections" },
+  //           { "data": "facebook_connections" },
+  //           { "data": "twitter_followers" },
+  //           { "data": "social_connection_index" }
+  //       ]
+  // });
+});
+
+
+
+// $(document).ready(function (){
+//   console.log("i m here");
+//   // Load schedule on page load
+//   var userdetails_source   = $("#render_user_list").html();
+//   var user_template = Handlebars.compile(userdetails_source);
+
+//   // function sortValues(){
+//   //         console.log($(this).data('name'));
+//   //         sort_order = $(this).data('name');
+//   //         $.ajax({
+//   //           url: "users/sort",
+//   //           method: "post",
+//   //           data: {
+//   //             order: sort_order
+//   //           },
+//   //           success: function(response) {
+//   //             user_html = user_template({
+//   //               users: response.users
+//   //             });
+//   //           $("#user_details").html(user_html);
+//   //           }
+//   //         });
+//   // }
+
+
+//   // function getUserDetails() {
+//   //   $.ajax({
+//   //     url: "users/user_details",
+//   //     method: "get",
+//   //     success: function(response) {
+//   //       user_html = user_template({
+//   //         users: response.users
+//   //       });
+//   //       // console.log(user_html);
+//   //       $("#user_details").html(user_html);
+//   //       $('.sort').on('click', function(e){
+//   //         console.log($(this).data('name'));
+//   //         sort_order = $(this).data('name');
+//   //         $.ajax({
+//   //           url: "users/sort",
+//   //           method: "post",
+//   //           data: {
+//   //             order: sort_order
+//   //           },
+//   //           success: function(response) {
+//   //             user_html = user_template({
+//   //               users: response.users
+//   //             });
+//   //             $("#user_details").html(user_html);
+//   //           }
+//   //         });
+//   //       });
+//   //     },
+//   //     error: function(xhr) {
+//   //       //Todo: Display error in UI
+//   //     }
+//   //   });    
+//   // }
+
+
+//   function getUserDetails(cb) {
+//     $.ajax({
+//       url: "/users/",
+//       method: "get",
+//       success: function(response) {
+//         user_html = user_template({
+//           users: response.users
+//         });
+//         // console.log(user_html);
+        
+//         // var user_html = $(user_html);
+//         // _apply_sort(user_html);
+//         $("#user_details").html(user_html);
+//         _apply_sort();
+//       },
+//       error: function(xhr) {
+//         //Todo: Display error in UI
+//       }
+//     });    
+//   }
+
+
+//   function _apply_sort() {
+//       $('.sort').on('click', function(e){
+//         sort_order = $(this).data('name');
+//         console.log($(this).data('name'));
+//         $.ajax({
+//           url: "users/sort",
+//           method: "post",
+//           data: {
+//             order: sort_order,
+//           },
+//           success: function(response) {
+//             user_html = user_template({
+//               users: response.users
+//             });
+
+//             //var user_html = $(user_html);
+//             //_apply_sort(user_html);
+//             $("#user_details").html(user_html);
+//             _apply_sort();
+//           }
+//         });
+//       });
+//   }
+
+
+//   getUserDetails();
 
  
-   $('#edit').on('show.bs.modal', function (e) {
-    edit_invoker = $(e.relatedTarget);
-    var data_id = edit_invoker.data('id');
-    var data_name = edit_invoker.data('name');
-    var data_linkedin_connections = edit_invoker.data('linkedin_connections');
-    var data_facebook_connections = edit_invoker.data('facebook_connections');
-    var data_twitter_followers = edit_invoker.data('twitter_followers');
-    var name = $("#edit input[name='name']").val(data_name);
-    var linkedin_connections = $("#edit input[name='linkedin_connections']").val(data_linkedin_connections);
-    var facebook_connections = $("#edit input[name='facebook_connections']").val(data_facebook_connections);
-    var twitter_followers = $("#edit input[name='twitter_followers']").val(data_twitter_followers);
-  });
+//    $('#edit').on('show.bs.modal', function (e) {
+//     edit_invoker = $(e.relatedTarget);
+//     var data_id = edit_invoker.data('id');
+//     var data_name = edit_invoker.data('name');
+//     var data_linkedin_connections = edit_invoker.data('linkedin_connections');
+//     var data_facebook_connections = edit_invoker.data('facebook_connections');
+//     var data_twitter_followers = edit_invoker.data('twitter_followers');
+//     var name = $("#edit input[name='name']").val(data_name);
+//     var linkedin_connections = $("#edit input[name='linkedin_connections']").val(data_linkedin_connections);
+//     var facebook_connections = $("#edit input[name='facebook_connections']").val(data_facebook_connections);
+//     var twitter_followers = $("#edit input[name='twitter_followers']").val(data_twitter_followers);
+//   });
   
 
 
 
-  $('#createuser').on('click', function(e){
-    e.preventDefault();
-    // console.log(data_id,name,linkedin_connections);
-    var name = $("#create input[name='name']").val();
-    var linkedin_connections = $("#create input[name='linkedin_connections']").val();
-    var facebook_connections = $("#create input[name='facebook_connections']").val();
-    var twitter_followers = $("#create input[name='twitter_followers']").val();
+//   $('#createuser').on('click', function(e){
+//     e.preventDefault();
+//     // console.log(data_id,name,linkedin_connections);
+//     var name = $("#create input[name='name']").val();
+//     var linkedin_connections = $("#create input[name='linkedin_connections']").val();
+//     var facebook_connections = $("#create input[name='facebook_connections']").val();
+//     var twitter_followers = $("#create input[name='twitter_followers']").val();
 
-    $.ajax({
-      url: '/users/create',
-      method: 'post',
-      data: {
-        name: name,
-        linkedin_connections: linkedin_connections,
-        facebook_connections: facebook_connections,
-        twitter_followers: twitter_followers,
-        // social_connections_index: social_connections_index
-      },
-      success: function(response){
-        $("#create .close").click();
-        getUserDetails();
-      },
-      error: function(response){
-        // alert(response);
-      }
-    });
-   });
+//     $.ajax({
+//       url: '/users/create',
+//       method: 'post',
+//       data: {
+//         name: name,
+//         linkedin_connections: linkedin_connections,
+//         facebook_connections: facebook_connections,
+//         twitter_followers: twitter_followers,
+//         // social_connections_index: social_connections_index
+//       },
+//       success: function(response){
+//         $("#create .close").click();
+//         getUserDetails();
+//       },
+//       error: function(response){
+//         // alert(response);
+//       }
+//     });
+//    });
 
 
-  $('#edituser').on('click', function(e){
-    e.preventDefault();
-    var data_id = edit_invoker.data('id');
-    var name = $("#edit input[name='name']").val();
-    var linkedin_connections = $("#edit input[name='linkedin_connections']").val();
-    var facebook_connections = $("#edit input[name='facebook_connections']").val();
-    var twitter_followers = $("#edit input[name='twitter_followers']").val();
+//   $('#edituser').on('click', function(e){
+//     e.preventDefault();
+//     var data_id = edit_invoker.data('id');
+//     var name = $("#edit input[name='name']").val();
+//     var linkedin_connections = $("#edit input[name='linkedin_connections']").val();
+//     var facebook_connections = $("#edit input[name='facebook_connections']").val();
+//     var twitter_followers = $("#edit input[name='twitter_followers']").val();
 
-    // console.log(data_id,name,linkedin_connections);
-    $.ajax({
-      url: '/users/edit',
-      method: 'post',
-      data: {
-        id: data_id,
-        name: name,
-        linkedin_connections: linkedin_connections,
-        facebook_connections: facebook_connections,
-        twitter_followers: twitter_followers,
-        // social_connections_index: social_connections_index
-      },
-      success: function(response){
-        $("#edit .close").click();
-        getUserDetails();
-      },
-      error: function(response){
-        // alert(response);
-      }
-    });
+//     // console.log(data_id,name,linkedin_connections);
+//     $.ajax({
+//       url: '/users/edit',
+//       method: 'post',
+//       data: {
+//         id: data_id,
+//         name: name,
+//         linkedin_connections: linkedin_connections,
+//         facebook_connections: facebook_connections,
+//         twitter_followers: twitter_followers,
+//         // social_connections_index: social_connections_index
+//       },
+//       success: function(response){
+//         $("#edit .close").click();
+//         getUserDetails();
+//       },
+//       error: function(response){
+//         // alert(response);
+//       }
+//     });
 
     
-   });
-  
-});
+//    });
+// });
