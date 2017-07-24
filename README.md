@@ -60,28 +60,28 @@ Once installation is done, visit http://localhost:3000/
 
 ### Workflow 
 
-![Main Page](show.gif)
+![Main Page](doc/show.gif)
 
 ### Lists all users
 
-![Main Page](main-page.png)
+![Main Page](doc/main-page.png)
 
 ### Paginate
 
-![Main Page](paginate.png)
+![Main Page](doc/paginate.png)
 
 ### Search
 
-![Main Page](search.png)
+![Main Page](doc/search.png)
 
 ### Sort
 
-![Main Page](sort.png)
+![Main Page](doc/sort.png)
 
 ### Add
 
-![Main Page](add.png)
+![Main Page](doc/add.png)
 
 ### Edit
 
-![Main Page](edit.png)
+![Main Page](doc/edit.png)
