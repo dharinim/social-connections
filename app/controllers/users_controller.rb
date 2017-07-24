@@ -7,15 +7,20 @@ class UsersController < ApplicationController
     sort_order = params["sort_order"] || :desc
     page = params["page"] || 1
     limit = params["limit"] || 10
+    searchTerm = params["searchTerm"] || ""
 
     offset = (page.to_i - 1) * limit.to_i
 
-    users = User.all.order(sort_field => sort_order).limit(limit).offset(offset)
+    users = User.all.order(sort_field => sort_order).
+                                        where(User.arel_table[:name].matches("%#{searchTerm}%"))
+
+    total = users.count
+    users = users.offset(offset).limit(limit)
 
     response = {
       users: users,
       page: page,
-      total: User.count,
+      total: total,
       limit: limit
     }
 

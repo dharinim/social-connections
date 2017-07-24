@@ -5,9 +5,14 @@ function ServerManager(opts) {
     sort_field: "social_connection_index",
     page: 1,
     limit: 10,
-    sort_order: "desc"
+    sort_order: "desc",
+    searchTerm: ""
   };
 }
+
+ServerManager.prototype.getQuery = function getQuery(opts) {
+  return this.userquery;
+};
 
 ServerManager.prototype.updateQuery = function updateQuery(opts) {
   jQuery.extend(this.userquery, opts);
@@ -74,6 +79,9 @@ function UIManager(opts) {
   this.selectors = {
     user_pagination: "#user_pagination"
   };
+
+  // for search ajax requests
+  self.searchUserTimer = false;
 }
 
 UIManager.prototype.showUsersList = function showUsersList() {
@@ -108,6 +116,7 @@ UIManager.prototype.initialize = function initialize() {
 
   self._initialize_edit_modal();
   self._initialize_create_modal();
+  self._initialize_search_user();
 };
 
 UIManager.prototype._initialize_create_modal = function _initialize_create_modal() {
@@ -173,16 +182,70 @@ UIManager.prototype._initialize_edit_modal = function _initialize_edit_modal() {
     });
  };
 
+UIManager.prototype._initialize_search_user = function _initialize_search_user() {
+  var self = this;
+
+  $("#search_user").keyup(function() {
+      if(self.searchUserTimer !== false) {
+        clearTimeout(self.searchUserTimer);
+      }
+
+      var searchTerm = $("#search_user").val();
+      self.serverManager.updateQuery({
+        searchTerm: searchTerm
+      });
+
+      self.changeTimer = setTimeout(function(){
+          self.showUsersList();
+          self.changeTimer = false;
+      }, 300);
+
+  });
+};
+
 UIManager.prototype._applySort = function _applySort() {
     var self = this;
     $('.sort').on('click', function(e) {
-        var sort_field = $(this).data('name');
+        var sort_field = $(this).data('sort_field');
+        
+        var current_sort_order;
+        var new_sort_order;
+
+        if ($(this).hasClass("sorting_desc")) {
+          current_sort_order = "desc";
+          new_sort_order = "asc";
+        } else if ($(this).hasClass("sorting")) {
+          current_sort_order = "none";
+          new_sort_order = "asc";
+        } else if ($(this).hasClass("sorting_asc")) {
+          current_sort_order = "asc";
+          new_sort_order = "desc";
+        }
 
         self.serverManager.updateQuery({
-          sort_field: sort_field
+          sort_field: sort_field,
+          sort_order: new_sort_order
         });
         
         self.showUsersList();
+    });
+
+    $("#mytable thead th").each(function (){
+        var sort_field = $(this).data('sort_field');
+
+        $(this).removeClass("sorting");
+        $(this).removeClass("sorting_asc");
+        $(this).removeClass("sorting_desc");
+
+        var currentQueryState = self.serverManager.getQuery();
+
+        if (sort_field === currentQueryState.sort_field && currentQueryState.sort_order === "asc") {
+          $(this).addClass("sorting_asc");  
+        } else if (sort_field === currentQueryState.sort_field && currentQueryState.sort_order === "desc") {
+          $(this).addClass("sorting_desc");  
+        } else {
+          $(this).addClass("sorting");
+        }
     });
 };
 
