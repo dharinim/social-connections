@@ -60,33 +60,99 @@
       <div id="content"><div id='filecontents'>
 <h1 id="label-README">README</h1>
 
-<p>This README would normally document whatever steps are necessary to get the
-application up and running.</p>
+<p>A social connections single page app with rails APIs</p>
 
-<p>Things you may want to cover:</p>
+<h2 id="label-Pre-requisites">Pre-requisites</h2>
 <ul><li>
-<p>Ruby version</p>
+<p>Ensure postgres sql is installed locally</p>
 </li><li>
-<p>System dependencies</p>
-</li><li>
-<p>Configuration</p>
-</li><li>
-<p>Database creation</p>
-</li><li>
-<p>Database initialization</p>
-</li><li>
-<p>How to run the test suite</p>
-</li><li>
-<p>Services (job queues, cache servers, search engines, etc.)</p>
-</li><li>
-<p>Deployment instructions</p>
-</li><li>
-<p>...</p>
+<p>Ensure ruby is installed</p>
 </li></ul>
+
+<h2 id="label-Installation">Installation</h2>
+
+<pre class="code ruby"><code class="ruby">
+  <span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_bundle'>bundle</span>
+  <span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_install'>install</span>
+  <span class='id identifier rubyid_export'>export</span> <span class='const'>RAILS_ENV</span><span class='op'>=</span><span class='id identifier rubyid_developoment'>developoment</span>
+  <span class='id identifier rubyid_rails'>rails</span> <span class='label'>db:</span><span class='id identifier rubyid_create'>create</span>
+  <span class='id identifier rubyid_rails'>rails</span> <span class='label'>db:</span><span class='id identifier rubyid_migrate'>migrate</span>
+  <span class='id identifier rubyid_rails'>rails</span> <span class='label'>db:</span><span class='id identifier rubyid_seed'>seed</span>
+  <span class='id identifier rubyid_rails'>rails</span> <span class='id identifier rubyid_s'>s</span>
+</code></pre>
+
+<p>Once installation is done, visit <a
+href="http://localhost:3000">localhost:3000</a>/</p>
+
+<h2 id="label-Testing">Testing</h2>
+
+<pre class="code ruby"><code class="ruby">
+  <span class='id identifier rubyid_export'>export</span> <span class='const'>RAILS_ENV</span><span class='op'>=</span><span class='id identifier rubyid_test'>test</span>
+  <span class='id identifier rubyid_rails'>rails</span> <span class='label'>db:</span><span class='id identifier rubyid_create'>create</span>
+  <span class='id identifier rubyid_rails'>rails</span> <span class='label'>db:</span><span class='id identifier rubyid_migrate'>migrate</span>
+  <span class='id identifier rubyid_rails'>rails</span> <span class='label'>db:</span><span class='id identifier rubyid_seed'>seed</span>
+  <span class='id identifier rubyid_rails'>rails</span> <span class='id identifier rubyid_test'>test</span>
+</code></pre>
+
+<h2 id="label-Key+Features+Implemented">Key Features Implemented</h2>
+<ul><li>
+<p>Shows list of all users in the database with social connection scores</p>
+</li><li>
+<p>Ability to sort results based on the the following criteria</p>
+<ul><li>
+<p>Linked in connections</p>
+</li><li>
+<p>facebook connections</p>
+</li><li>
+<p>twitter followers</p>
+</li><li>
+<p>social connection index score</p>
+</li><li>
+<p>name of the user</p>
+</li><li>
+<p>id of the user</p>
+</li></ul>
+</li><li>
+<p>Ability to search by name (and preserve sorting and filtering).</p>
+</li><li>
+<p>Addition of a new user.</p>
+</li><li>
+<p>Data validation both in backend and frontend.</p>
+</li></ul>
+
+<h2 id="label-The+following+are+the+screenshots+of+the+application">The following are the screenshots of the application</h2>
+
+<h3 id="label-Workflow">Workflow</h3>
+
+<p><img src="show.gif"></p>
+
+<h3 id="label-Lists+all+users">Lists all users</h3>
+
+<p><img src="main-page.png"></p>
+
+<h3 id="label-Paginate">Paginate</h3>
+
+<p><img src="paginate.png"></p>
+
+<h3 id="label-Search">Search</h3>
+
+<p><img src="search.png"></p>
+
+<h3 id="label-Sort">Sort</h3>
+
+<p><img src="sort.png"></p>
+
+<h3 id="label-Add">Add</h3>
+
+<p><img src="add.png"></p>
+
+<h3 id="label-Edit">Edit</h3>
+
+<p><img src="edit.png"></p>
 </div></div>
 
       <div id="footer">
-  Generated on Sun Jul 23 23:16:59 2017 by
+  Generated on Sun Jul 23 23:59:42 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.3.3).
 </div>
