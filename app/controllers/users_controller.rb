@@ -11,13 +11,15 @@ class UsersController < ApplicationController
     limit = params["limit"] || 10
     searchTerm = params["searchTerm"] || ""
 
-    offset = (page.to_i - 1) * limit.to_i
+    limit = limit.to_i
+    offset = (page.to_i - 1) * limit
 
-    users = User.all.order(sort_field => sort_order).
+    users = User.all.order(sort_field => sort_order, :id => "desc").
                                         where(User.arel_table[:name].matches("%#{searchTerm}%"))
 
     total = users.count
     users = users.offset(offset).limit(limit)
+    users = users.select(User.column_names - ["created_at", "updated_at"])
 
     response = {
       users: users,
