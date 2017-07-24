@@ -1,6 +1,5 @@
 function ServerManager(opts) {
   // Handlers all the server interactions
-
   this._userquery = {
     sort_field: "social_connection_index",
     page: 1,
@@ -25,11 +24,10 @@ ServerManager.prototype.createUser = function createUser(params, cb) {
       data: params,
       success: function(response){
         $("#create .close").click();
-        //getUserDetails();
-        cb(null, response);
+        return cb(null, response);
       },
       error: function(response){
-        // alert(response);
+        return cb(new Error("Error fetching createuser" + response), null);
       }
     });
 };
@@ -42,10 +40,10 @@ ServerManager.prototype.editUser = function editUser(id, data, cb) {
       success: function(response){
         $("#edit .close").click();
         //getUserDetails();
-        cb(null, response);
+        return cb(null, response);
       },
       error: function(response){
-        // alert(response);
+        return cb(new Error("Error fetching createuser" + response), null);
       }
     });
 };
@@ -61,7 +59,7 @@ ServerManager.prototype.getUsers = function getUsers(cb) {
         return cb(null, response);
       },
       error: function(xhr) {
-        return cb(xhr, {});
+        return cb(new Error("Error fetching createuser" + xhr), null);
       }
     }); 
 };
@@ -106,7 +104,7 @@ UIManager.prototype.showUsersList = function showUsersList() {
         });
 
     } else {
-      // Display error in UI
+      alert("Error in" + error.message);
     }
   });
 };
@@ -175,6 +173,10 @@ UIManager.prototype._initialize_edit_modal = function _initialize_edit_modal() {
           facebook_connections: facebook_connections,
           twitter_followers: twitter_followers
        }, function onEditUser(error, response){
+          if (error) {
+            alert("Error in" + error.message);
+          }
+
           self.showUsersList();
       });
 
