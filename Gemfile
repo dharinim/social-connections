@@ -42,6 +42,8 @@ gem 'jquery-ui-rails'
 
 gem 'yard'
 
+gem 'high_voltage', '~> 3.0.0'
+
 group :test do
   gem "factory_girl_rails"
   gem 'timecop'

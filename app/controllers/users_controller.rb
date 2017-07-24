@@ -4,6 +4,14 @@ class UsersController < ApplicationController
   before_action :validate_id, :only => :update
   before_action :validate_social_counts, :only => [:create, :update]
 
+  # Returns all users after matching
+  # and filtering with the filtering parameters
+  # @param sort_field [String] specifies the field to sort on
+  # @param sort_order [String] either "asc" or "desc"
+  # @param page [Integer] the page number to display for pagination
+  # @param limit [Integer] limits the results by the given number
+  # @param searchTerm [String] search term for filtering on name field
+
   def index
     sort_field = params["sort_field"] || :social_connection_index
     sort_order = params["sort_order"] || :desc
@@ -33,6 +41,11 @@ class UsersController < ApplicationController
     end
   end
   
+  # Create a new user object
+  # @param name [String] specifies the name of the user
+  # @param linkedin_connections [Integer] specifies the count of linkedin_connections
+  # @param facebook_connections [Integer] specifies the count of facebook_connections
+  # @param twitter_followers [String] specifies the count of twitter_followers
   def create
       name = params["name"]
       linkedin_connections = params["linkedin_connections"].to_i
@@ -53,6 +66,12 @@ class UsersController < ApplicationController
               )
   end
 
+  # Update a user object
+  # @param id [Integer] specifies the user id to edit
+  # @param name [String] specifies the name of the user
+  # @param linkedin_connections [Integer] specifies the count of linkedin_connections
+  # @param facebook_connections [Integer] specifies the count of facebook_connections
+  # @param twitter_followers [String] specifies the count of twitter_followers
   def update
       id = params["id"].to_i
       name = params["name"]
