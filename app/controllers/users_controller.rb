@@ -4,24 +4,20 @@ class UsersController < ApplicationController
 
   def index
     sort_field = params["sort_field"] || :social_connection_index
-    order = params["order"] || :desc
+    sort_order = params["sort_order"] || :desc
     page = params["page"] || 1
     limit = params["limit"] || 10
 
     offset = (page.to_i - 1) * limit.to_i
 
-    users = User.all.order(sort_field => order).limit(limit).offset(offset)
+    users = User.all.order(sort_field => sort_order).limit(limit).offset(offset)
 
     response = {
-      users: users
+      users: users,
+      page: page,
+      total: User.count,
+      limit: limit
     }
-
-    # response = {
-    #   draw: page,
-    #   recordsTotal: User.count,
-    #   recordsFiltered: users.length,
-    #   data: users
-    # }
 
     respond_to do |format|
       format.json  { render :json => response }
@@ -38,7 +34,7 @@ class UsersController < ApplicationController
               social_connection_index: find_social_connection_index(params["linkedin_connections"].to_i, params["facebook_connections"].to_i, params["twitter_followers"].to_i))
   end
 
-  def edit
+  def update
       user = User.find(params["id"].to_i)
       user.update(id: params["id"].to_i,
                   name: params["name"], 
