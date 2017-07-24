@@ -1,24 +1,10 @@
 <div id="user_details">
 </div>
 <div id="user_pagination"></div>
-<!-- <div>
-  <table id="user_details_table" class="display">
-      <thead>
-          <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>LinkedIn Connections</th>
-              <th>Facebook Connections</th>
-              <th>Twitter Followers</th>
-              <th>Social Connection Index</th>
-          </tr>
-      </thead>
-  
-  </table>
-</div> -->
 
 <!-- Handlebar templates required by JS in this file --> 
 <%= render "user_details.hbr.html.erb" %>
 
 <!-- Modal windows for edit/delete operations -->
 <%= render "user_edit_modal.html.erb" %>
+<%= render "user_create_modal.html.erb" %>
