@@ -81,5 +81,4 @@ test:
 production:
   <<: *default
   database: social_connection_production
-  username: social_connection
   password: <%= ENV['SOCIAL_CONNECTION_DATABASE_PASSWORD'] %>
